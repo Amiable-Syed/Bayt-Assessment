@@ -1,6 +1,10 @@
 # Bayt-Assessment
 Bayt-Assessment (Slider)
 
+# Note:
+The user defined content should always be a collection of HTML Strings, to be accepted by my generalised slider component.
+Component.js includes the slider component code while script.js includes the user defined content to be placed in between the slider.
+
 # Live Demo
 https://amiable-syed.github.io/Bayt-Assessment/
 ## For Desktop:
