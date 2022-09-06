@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
+    <script type="text/javascript" src="component.js"></script>
     <script type="text/javascript" src="script.js"></script>
     <link href="styles.css" rel="stylesheet" type="text/css" />
     <head>
         <title>Slider</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
-<body>
-    <div class="slider">
-        <img src="./assets/arrow.svg" class="slider_arrow  left_arrow" onclick="changeSlide(-1)"/>
-        <div class="slide_content"></div>
-        <img src="./assets/arrow.svg" class="slider_arrow" onclick="changeSlide(1)"/>
-    </div>
-</body>
+    <body>
+        <div class="slider">
+            <img src="./assets/arrow.svg" class="slider_arrow  left_arrow" onclick="changeSlide(-1)"/>
+            <div class="slide_content">
+            </div>
+            <img src="./assets/arrow.svg" class="slider_arrow" onclick="changeSlide(1)"/>
+        </div>
+    </body>
 </html>
