@@ -1,6 +1,8 @@
 # Bayt-Assessment
 Bayt-Assessment (Slider)
 
+# Live Demo
+https://amiable-syed.github.io/Bayt-Assessment/
 ## For Desktop:
 ![image](https://user-images.githubusercontent.com/23275447/188719103-a7827d1a-d8c4-45eb-bb96-ef57b1ce4d1e.png)
 
