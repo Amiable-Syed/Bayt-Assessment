@@ -83,21 +83,34 @@ body{
 }
 
 .fade_effect {
-    animation-name: fade-in;
+    animation-name: move-right;
     animation-duration: 1.5s;
   }
   .slide_content {
-    animation-name: fade-in;
+    animation-name: move-right;
     animation-duration: 1.5s;
-    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
   }
-@keyframes fade-in {
-    from {
-        opacity: .3;
-    } 
-    to {
-         opacity: 1;
-    }
+@keyframes move-right {
+    0% {
+        transform: translateX(40%);
+      }
+      50% {
+        transform: translateX(-90%);
+        opacity: 1;
+      }
+      50.001% {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      50.002% {
+        opacity: 1;
+        transform: translateX(100%);
+      }
+      100% {
+        transform: translateX(0);
+      }
 }
 
 /* On Mobile screen */
