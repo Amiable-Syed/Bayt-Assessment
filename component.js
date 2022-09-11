@@ -10,13 +10,7 @@ let dots = document.getElementsByClassName("dot");
   const showSlides=()=> {    
     if (slideIndex >= slides.length) {slideIndex = 0}    
     if (slideIndex < 0) {slideIndex = slides.length - 1}
-    for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
-        dots[i].className = dots[i].className.replace(" current_active", "");
-    }
-
-    slides[slideIndex].style.display = "block";  
-    dots[slideIndex].className += " current_active";
+    currentSlide();
     slideIndex++;
     setTimeout(showSlides, 3000); // Change slide every 3 seconds
 }
@@ -37,10 +31,10 @@ let dots = document.getElementsByClassName("dot");
   const currentSlide=()=>{ 
     for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none"; 
-        dots[i].className = dots[i].className.replace(" current_active", "");
+        dots[i].classList.remove("current_active");
     }
     slides[slideIndex].style.display = "block";
-    dots[slideIndex].className += " current_active";
+    dots[slideIndex].classList.add("current_active");
   }
 
   /*
