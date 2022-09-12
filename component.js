@@ -1,27 +1,37 @@
 class SlideComponent {
+
   // Some class attributes required in Slider
-  constructor(sliderContainer,userContentList) {
+  constructor(sliderContainer,userContentList,idx) {
     this.sliderContainer = sliderContainer;
     this.arrowCreateRenderer();
-    this.slideIndex = 0;
+    this.slideIndex = -1;
+    this.CarousalIndex = idx;
+    this.resetInterval = null;
     this.slides = this.sliderContainer.getElementsByClassName("slide");
     this.dots = this.sliderContainer.getElementsByClassName("dot");
     this.init(userContentList);
+    this.sliderAnimation = document.getElementsByClassName('animate_slider');
   }
+
+  startInterval=()=>{
+    this.interval = setInterval(this.showSlides,3000);
+  }
+
 
   init(userContentList){
     const sliderContent = this.sliderContainer.querySelector('.slide_content');
     const sliderWrapper= document.createElement('div');
+    sliderWrapper.classList.add('animate_slider');
     userContentList.forEach(content => {
       let element = document.createElement('div');
       element.classList.add('slide');
-      element.classList.add('fade_effect');
       element.innerHTML = content;
       sliderWrapper?.appendChild(element);  
     });
     sliderContent.appendChild(sliderWrapper);
     this.dotsRenderer(sliderContent,{noOfDots: userContentList.length});
-    this.showSlides();
+    this.startAutoSlides()
+    this.startInterval();
   }
 
   arrowCreateRenderer =()=>{
@@ -51,25 +61,54 @@ class SlideComponent {
   
     this.sliderContainer.appendChild(rightArrowImg);
   }
+
+  startAutoSlides=()=>{
+    this.slideIndex++;
+    this.outOfBoundIndexes();
+    this.currentSlide();
+  }
     /*
   * Initialise and render the initial slides and configure to autoplay every 3 seconds
   */
-  showSlides=()=> {    
-    if (this.slideIndex >= this.slides.length) {this.slideIndex = 0}    
-    if (this.slideIndex < 0) {this.slideIndex = this.slides.length - 1}
-    this.currentSlide();
-    this.slideIndex++;
-    setTimeout(this.showSlides, 3000); // Change slide every 3 seconds
+  showSlides=()=> { 
+    this.sliderAnimation[this.CarousalIndex].classList.add('fade_effect_right');
+    this.removeClasses(()=>{
+      this.startAutoSlides();
+    });
+}
+
+  removeClasses=(cb)=>{
+    setTimeout(()=> {
+      this.sliderAnimation[this.CarousalIndex].classList.remove('fade_effect_left');
+      this.sliderAnimation[this.CarousalIndex].classList.remove('fade_effect_right')
+      cb?.();
+    }, 1500)
   }
 
+  outOfBoundIndexes=()=>{
+    if (this.slideIndex >= this.slides.length) {this.slideIndex = 0}    
+    if (this.slideIndex < 0) {this.slideIndex = this.slides.length - 1}
+  }
     /*
   * Event Listener for slide change when clicked on arrows
   */ 
   changeSlide =(slideToIndex)=>{
+    this.resetInterval && clearInterval(this.resetInterval);
+    this.interval && clearInterval(this.interval);
+
+    if(slideToIndex < 0){
+      this.sliderAnimation[this.CarousalIndex].classList.add('fade_effect_left');
+      } else{
+      this.sliderAnimation[this.CarousalIndex].classList.add('fade_effect_right');
+    }
+    this.interval = null;
+    this.removeClasses(()=>{
       this.slideIndex = this.slideIndex + slideToIndex;
-      if (this.slideIndex >= this.slides.length) {this.slideIndex = 0}    
-      if (this.slideIndex < 0) {this.slideIndex = this.slides.length - 1}
+      this.outOfBoundIndexes();
       this.currentSlide();
+        this.resetInterval = setTimeout(()=>{
+        this.startInterval()},2000)
+    });
  }
 
    /*
@@ -103,7 +142,7 @@ class SlideComponent {
   */
   const contentComponent=(userContentList)=>{
     const sliders = document.querySelectorAll(".slider");
-    sliders?.forEach((sliderContainer)=>{
-      new SlideComponent(sliderContainer,userContentList); 
+    sliders?.forEach((sliderContainer,idx)=>{
+      new SlideComponent(sliderContainer,userContentList,idx); 
     })
   }
